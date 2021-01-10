@@ -1,5 +1,12 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+    window.localStorage.clear();
+
+    /**
+     * This class is to create a card for a ingredient
+     * to create it the constructor need the name of the ingredient
+     * and the link to the image location
+     */
     class Cards {
         constructor(ingredient, image) {
             this.ingredient = ingredient;
@@ -9,7 +16,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
         create() {
-            var main = document.querySelector('#main_content');
+
+            //creation of all element necessary for the card
+            var container = document.querySelector('#main_content');
             var card = document.createElement("div");
             var cardContent = document.createElement("div");
             var rounded = document.createElement("div");
@@ -30,6 +39,8 @@ document.addEventListener("DOMContentLoaded", function() {
             } else {
                 card.className += "-rotate-" + x;
             }
+
+            //add of tailwind class for card
             card.className += " sm:w-1/10 md:w-2/5 lg:w-2/6 xl:w-1/6  absolute h-1/4 mx-auto transform  flex items-center";
             cardContent.className = "text-3xl px-1 w-full h-full";
             rounded.className += "max-w-md bg-white grid  overflow-hidden ";
@@ -41,15 +52,21 @@ document.addEventListener("DOMContentLoaded", function() {
             secondButtons.className += "bg-green-600 rounded-full h-24 w-24 flex-col flex items-center text-xl justify-center";
             secondButtons.id = "right"
             firtButtons.id = "left"
+
+            //add off icons
             like.className = "fas fa-times text-3xl";
             dislike.className = "fas fa-check text-3xl";
+
+            //add the text of button and title
             var likeText = document.createTextNode("Sweep");
             var dislikeText = document.createTextNode("Keep");
             var titleText = document.createTextNode(this.ingredient);
+
+            //add the image
             ilustration.src = './images/ingredients/' + this.image
+
             title.appendChild(titleText)
             firtButtons.appendChild(like);
-
             firtButtons.appendChild(likeText);
             secondButtons.appendChild(dislike);
             secondButtons.appendChild(dislikeText);
@@ -59,21 +76,18 @@ document.addEventListener("DOMContentLoaded", function() {
             rounded.appendChild(content)
             rounded.insertBefore(ilustration, content)
             rounded.insertBefore(title, ilustration)
-
-
             cardContent.appendChild(rounded)
             card.appendChild(cardContent)
-            main.appendChild(card)
+            container.appendChild(card)
 
         }
 
     }
 
     var listKeep = [];
-
     var count = 0;
 
-    function like(type) {
+    function swipe(type) {
 
         var supperParent = event.currentTarget.parentNode.parentNode;
         var mainBody = document.querySelector('#main_content')
@@ -81,10 +95,12 @@ document.addEventListener("DOMContentLoaded", function() {
         var choice = document.createElement("div");
         var title = parent.querySelector('h2').textContent;
         var link = document.createElement("a");
+
         link.innerHTML = " recettes ";
         link.href = "recettes.html"
         link.style.textDecoration = "underline";
         var text;
+
         if (type == 1) {
 
 
@@ -97,13 +113,12 @@ document.addEventListener("DOMContentLoaded", function() {
             choice.className += "status like"
             text = document.createTextNode("Like");
             listKeep.push(title);
-            localStorage.setItem("names", JSON.stringify(listKeep));
+            localStorage.setItem("ingredients", JSON.stringify(listKeep));
 
         }
 
         choice.appendChild(text);
         supperParent.appendChild(choice)
-
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -125,7 +140,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
                             nbOfRecettes++;
                         }
-
                     });
                 }
                 var bottomDiv = document.querySelector('#nextPage')
@@ -136,8 +150,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (listKeep.length == 0) {
                     bottomDiv.innerHTML = "Aucun ingredient n'a été choisi pour l'instant";
                 }
-
-
             }
         };
         xmlhttp.open("GET", "recipes.json", true);
@@ -180,14 +192,14 @@ document.addEventListener("DOMContentLoaded", function() {
             //this get all the button which have "left" like id and add the ivent listener
             var test = document.querySelectorAll('#left');
             test.forEach(element => {
-                element.addEventListener('click', function() { like(1); });
+                element.addEventListener('click', function() { swipe(1); });
             });
 
             //this get all the button which have "right" like id and add the ivent listener
             var test1 = document.querySelectorAll('#right');
 
             test1.forEach(element => {
-                element.addEventListener('click', function() { like(2); });
+                element.addEventListener('click', function() { swipe(2); });
             });
         }
     };
