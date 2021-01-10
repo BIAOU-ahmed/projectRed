@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         var supperParent = event.currentTarget.parentNode.parentNode;
         var mainBody = document.querySelector('#main_content')
-        var parent = s.parentNode.parentNode.parentNode
+        var parent = supperParent.parentNode.parentNode.parentNode
         var choice = document.createElement("div");
         var title = parent.querySelector('h2').textContent;
         var link = document.createElement("a");
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
             parent.classList.remove("rotate-right");
             parent.classList.remove("rotate-left");
             console.log(parent)
-            var trr = s.querySelector('.status');
+            var trr = supperParent.querySelector('.status');
             trr.remove()
             mainBody.prepend(parent)
         }, 2000);
@@ -158,5 +158,39 @@ document.addEventListener("DOMContentLoaded", function() {
         count++;
 
     }
+
+
+    // this part allow to open the ingredient JSON file and create the card according to the information in the JSON files
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var myObj = JSON.parse(this.responseText);
+            // document.getElementById("demo").innerHTML = myObj.name;
+
+            const randomly = () => Math.random() - 0.1;
+            const dynamicCard = [].concat(myObj).sort(randomly);
+
+            myObj.forEach((element, index) => {
+
+                var card = new Cards(dynamicCard[index].name, dynamicCard[index].image)
+                card.create()
+            });
+
+            //this get all the button which have "left" like id and add the ivent listener
+            var test = document.querySelectorAll('#left');
+            test.forEach(element => {
+                element.addEventListener('click', function() { like(2); });
+            });
+
+            //this get all the button which have "right" like id and add the ivent listener
+            var test1 = document.querySelectorAll('#right');
+
+            test1.forEach(element => {
+                element.addEventListener('click', function() { like(1); });
+            });
+        }
+    };
+    xmlhttp.open("GET", "ingredient.json", true);
+    xmlhttp.send();
 
 });
