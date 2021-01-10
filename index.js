@@ -87,12 +87,13 @@ document.addEventListener("DOMContentLoaded", function() {
         var text;
         if (type == 1) {
 
-            parent.className += " rotate-right"
 
+            parent.className += " rotate-left"
             choice.className += "status dislike"
             text = document.createTextNode("Dislike");
         } else {
-            parent.className += " rotate-left"
+
+            parent.className += " rotate-right"
             choice.className += "status like"
             text = document.createTextNode("Like");
             listKeep.push(title);
@@ -139,7 +140,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             }
         };
-        xmlhttp.open("GET", "recettes.json", true);
+        xmlhttp.open("GET", "recipes.json", true);
         xmlhttp.send();
 
         setTimeout(function() {
@@ -179,14 +180,14 @@ document.addEventListener("DOMContentLoaded", function() {
             //this get all the button which have "left" like id and add the ivent listener
             var test = document.querySelectorAll('#left');
             test.forEach(element => {
-                element.addEventListener('click', function() { like(2); });
+                element.addEventListener('click', function() { like(1); });
             });
 
             //this get all the button which have "right" like id and add the ivent listener
             var test1 = document.querySelectorAll('#right');
 
             test1.forEach(element => {
-                element.addEventListener('click', function() { like(1); });
+                element.addEventListener('click', function() { like(2); });
             });
         }
     };
