@@ -68,4 +68,95 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
     }
+
+    var listKeep = [];
+
+    var count = 0;
+
+    function like(type) {
+
+        var supperParent = event.currentTarget.parentNode.parentNode;
+        var mainBody = document.querySelector('#main_content')
+        var parent = s.parentNode.parentNode.parentNode
+        var choice = document.createElement("div");
+        var title = parent.querySelector('h2').textContent;
+        var link = document.createElement("a");
+        link.innerHTML = " recettes ";
+        link.href = "recettes.html"
+        link.style.textDecoration = "underline";
+        var text;
+        if (type == 1) {
+
+            parent.className += " rotate-right"
+
+            choice.className += "status dislike"
+            text = document.createTextNode("Dislike");
+        } else {
+            parent.className += " rotate-left"
+            choice.className += "status like"
+            text = document.createTextNode("Like");
+            listKeep.push(title);
+            localStorage.setItem("names", JSON.stringify(listKeep));
+
+        }
+
+        choice.appendChild(text);
+        supperParent.appendChild(choice)
+
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var myObj = JSON.parse(this.responseText);
+                // document.getElementById("demo").innerHTML = myObj.name;
+                var nbOfRecettes = 0;
+                var listrecettes
+                if (listKeep.length > 0) {
+                    myObj.forEach(element => {
+                        listrecettes = [];
+                        console.log(element.ingredient)
+                        var haveAll = true;
+                        listKeep.forEach(ing => {
+                            if (!element.ingredient.includes(ing)) {
+                                haveAll = false;
+                            }
+                        })
+                        if (haveAll) {
+
+                            nbOfRecettes++;
+                        }
+
+                    });
+                }
+                var bottomDiv = document.querySelector('#nextPage')
+                bottomDiv.innerHTML = "Il y a " + nbOfRecettes + " &nbsp;";
+
+                bottomDiv.appendChild(link);
+                bottomDiv.innerHTML += "&nbsp; disponible";
+                if (listKeep.length == 0) {
+                    bottomDiv.innerHTML = "Aucun ingredient n'a été choisi pour l'instant";
+                }
+
+
+            }
+        };
+        xmlhttp.open("GET", "recettes.json", true);
+        xmlhttp.send();
+
+        setTimeout(function() {
+
+            parent.remove();
+
+            parent.classList.remove("rotate-right");
+            parent.classList.remove("rotate-left");
+            console.log(parent)
+            var trr = s.querySelector('.status');
+            trr.remove()
+            mainBody.prepend(parent)
+        }, 2000);
+
+
+        count++;
+
+    }
+
 });
