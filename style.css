@@ -1,3 +1,11 @@
+body {
+    font-family: Lora;
+    background-image: linear-gradient(rgba(47, 23, 15, .65), rgba(47, 23, 15, .65)), url(./images/bg.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover
+}
+
 .like {
     border-radius: 5px;
     padding: 5px 10px;

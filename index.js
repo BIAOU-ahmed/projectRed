@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var link = document.createElement("a");
 
         link.innerHTML = " recettes ";
-        link.href = "recettes.html"
+        link.href = "recipes.html"
         link.style.textDecoration = "underline";
         var text;
 
@@ -119,41 +119,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         choice.appendChild(text);
         supperParent.appendChild(choice)
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                var myObj = JSON.parse(this.responseText);
-                // document.getElementById("demo").innerHTML = myObj.name;
-                var nbOfRecettes = 0;
-                var listrecettes
-                if (listKeep.length > 0) {
-                    myObj.forEach(element => {
-                        listrecettes = [];
-                        console.log(element.ingredient)
-                        var haveAll = true;
-                        listKeep.forEach(ing => {
-                            if (!element.ingredient.includes(ing)) {
-                                haveAll = false;
-                            }
-                        })
-                        if (haveAll) {
 
-                            nbOfRecettes++;
-                        }
-                    });
-                }
-                var bottomDiv = document.querySelector('#nextPage')
-                bottomDiv.innerHTML = "Il y a " + nbOfRecettes + " &nbsp;";
-
-                bottomDiv.appendChild(link);
-                bottomDiv.innerHTML += "&nbsp; disponible";
-                if (listKeep.length == 0) {
-                    bottomDiv.innerHTML = "Aucun ingredient n'a été choisi pour l'instant";
-                }
-            }
-        };
-        xmlhttp.open("GET", "recipes.json", true);
-        xmlhttp.send();
+        var bottomDiv = document.querySelector('#nextPage')
+        bottomDiv.innerHTML = '<a class="inline-flex items-center h-10 px-4 m-2 text-lg text-indigo-100 transition-colors duration-150 bg-indigo-700 rounded-lg focus:shadow-outline hover:bg-indigo-800" href="./recipes.html">Liste de recettes</a>';
 
         setTimeout(function() {
 
@@ -169,7 +137,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
         count++;
-
+        var total = document.querySelectorAll('#main_content>div');
+        console.log("total " + total.length)
+        if (count == total.length) {
+            // alert("fini");
+            count = 0;
+            window.location.href = './recipes.html';
+        }
     }
 
 
