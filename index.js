@@ -101,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
         link.style.textDecoration = "underline";
         var text;
 
+        //we check is swipe to right or left
         if (type == 1) {
 
 
@@ -140,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var total = document.querySelectorAll('#main_content>div');
         console.log("total " + total.length)
         if (count == total.length) {
-            // alert("fini");
+
             count = 0;
             window.location.href = './recipes.html';
         }
