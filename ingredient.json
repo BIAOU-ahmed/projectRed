@@ -1,0 +1,17 @@
+[
+    { "name": "banane", "image": "banane.jpg" },
+    { "name": "ananas", "image": "ananas.jpg" },
+    { "name": "pomme", "image": "pomme.jpg" },
+    { "name": "chocolat", "image": "chocolat.jpg" },
+    { "name": "myrtille", "image": "myrtille.jpg" },
+    { "name": "noix de coco", "image": "noix_de_coco.jpg" },
+    { "name": "poire", "image": "poire.jpg" },
+    { "name": "vanille", "image": "vanille.jpg" },
+    { "name": "abricots", "image": "abricot.jpg" },
+    { "name": "fraise", "image": "fraise.jpg" },
+    { "name": "lait", "image": "lait.jpg" },
+    { "name": "sucre", "image": "sucre.jpg" },
+    { "name": "farine", "image": "farine.jpg" },
+    { "name": "oeuf", "image": "oeuf.jpg" },
+    { "name": "cerises", "image": "cerises.jpg" }
+]
